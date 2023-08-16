@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Citas</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Generador de Citas Médicas</h1>
+
+    <form>
+        <label for="nombreInput">Nombre:</label>
+        <input type="text" id="nombreInput" placeholder="Ingresa tu nombre">
+
+        <label for="apellidoInput">Apellido:</label>
+        <input type="text" id="apellidoInput" placeholder="Ingresa tu apellido">
+
+        <label for="telefonoInput">Teléfono:</label>
+        <input type="text" id="telefonoInput" placeholder="Ingresa tu teléfono">
+
+        <button id="crearCitaBtn">Crear Cita</button>
+    </form>
+
+    <div id="citaContainer"></div>
+</div>
+
+
+
+<script>
+        const crearCitaBtn = document.getElementById("crearCitaBtn");
+        const nombreInput = document.getElementById("nombreInput");
+
+        const apellidoInput = document.getElementById("apellidoInput");
+        const telefonoInput = document.getElementById("telefonoInput");
+        const citaContainer = document.getElementById("citaContainer");
+
+ crearCitaBtn.addEventListener("click", async () => {
+            const response = await fetch("/api/cita");
+    const cita = await response.json();
+
+    const nombre = nombreInput.value;
+    const apellido = apellidoInput.value;
+    const telefono = telefonoInput.value;
+    const citaText = cita.texto;
+
+    const citaElement = document.createElement("p");
+    citaElement.textContent = `Hola ${nombre} ${apellido}, tu teléfono es ${telefono}.: ${citaText}`;
+
+    citaContainer.innerHTML = "";
+    citaContainer.appendChild(citaElement);
+        });
+    </script>
+
+</body>
+</html>
